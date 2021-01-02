@@ -1,7 +1,8 @@
 /**
  * 
  * Message: {
- *  dateTime: 2011-10-05T14:48:00.000Z, //(ISO 8601)
+ *  dateTime: "2011-10-05T14:48:00.000Z", //(ISO 8601)
+ *  author: "Dorf the Dwarf"
  *  Message: "I roll [1d20]" //[1d20] is replaced by RNG Value by the dungeon master client
  * }
  * 
@@ -13,7 +14,8 @@
 if(window.Worker){
 
     function sendMessage(message){
-        
+        console.log(message);
+        postMessage(message)
     }
 
     onmessage = function(message){
@@ -25,10 +27,4 @@ if(window.Worker){
             }
         }
     }
-
-
-
-
-
-
 }
