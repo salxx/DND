@@ -1,0 +1,364 @@
+/*---------------font import---------------*/
+
+@import url(//db.onlinewebfonts.com/c/e163c6518afdb5035f3933758c68e480?family=SylfaenW01-Regular);
+
+@font-face {font-family: "SylfaenW01-Regular"; src: url("//db.onlinewebfonts.com/t/e163c6518afdb5035f3933758c68e480.eot"); src: url("//db.onlinewebfonts.com/t/e163c6518afdb5035f3933758c68e480.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/e163c6518afdb5035f3933758c68e480.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/e163c6518afdb5035f3933758c68e480.woff") format("woff"), url("//db.onlinewebfonts.com/t/e163c6518afdb5035f3933758c68e480.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/e163c6518afdb5035f3933758c68e480.svg#SylfaenW01-Regular") format("svg"); }
+
+/*---------------fundamental structure of page---------------*/
+
+html, body{
+    width:100%;
+    height: 100%;
+    margin: auto;
+    text-align: center;
+    //background-color: #252525;
+    font-family: 'SylfaenW01-Regular', Fallback, Serif;
+    overflow-x: hidden;
+    background:
+    url(images/bg.png) repeat-x,
+    #252525;
+}
+
+.dndContainer{
+    display: inline-block;
+}
+
+.dndContainer .head{
+    display: table-row;
+    height: 2em;
+    text-align: right;
+}
+
+.rowChatMap:after{
+
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.colChat{
+
+    float: left;
+
+    height: 914px;
+    width: 515px;
+
+    background:
+    url(images/LTL.png) 0px 8px no-repeat,
+    url(images/LTR.png) 467px 7px no-repeat,
+    url(images/chat.png) no-repeat;
+
+    text-align: center;
+    text-align-all: center;
+    align-content: center;
+    align-items: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.colMap{
+    float: left;
+
+    width:1165px;
+    height:914px;
+
+    background:
+    url(images/RTL.png) 65px 72px no-repeat,
+    url(images/RTR.png) 1071px 72px no-repeat,
+    url(images/RBR.png) 1076px 768px no-repeat,
+    url(images/RBL.png) 57px 763px no-repeat,
+    url(images/map.png);
+}
+
+/*---------------modified html tags---------------*/
+
+button {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    /* show a hand cursor on hover; some argue that we
+    should keep the default arrow cursor for buttons */
+    cursor: pointer;
+}
+
+input {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    font-family: 'SylfaenW01-Regular', Fallback, Serif;
+}
+
+textarea{
+
+    font-family: 'SylfaenW01-Regular', Fallback, Serif;
+}
+
+canvas{
+    position: relative;
+    left: 0px;
+    top: 131px;
+    background-image: url(images/mapPergament.png);
+    border:0px solid #000000;
+    font-family: 'SylfaenW01-Regular', Fallback, Serif;
+}
+
+/*---------------scrollbar---------------*/
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #aa5e00;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #6f3300;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #592600;
+}
+
+/*---------------map---------------*/
+
+.mapButtons{
+    position: relative;
+    top: 176px;
+    right: 220px;
+}
+
+.skell{
+    position: relative;
+    top: 0px;
+    left: 463px;
+}
+
+/*---------------chat---------------*/
+
+.chatButtons{
+    position: relative;
+    top: 190px;
+    padding: 0px;
+    margin: 0px;
+
+    color: #cccc99;
+}
+
+.chatTextOutside{
+
+    position: relative;
+    top: 180px;
+    left: 100px;
+
+    height: 600px;
+    width: 325px;
+
+    background-image: url(images/scroll.png);
+    background-repeat: no-repeat;
+}
+
+.chatTextLetters, .chatTextLetters:active, .chatTextLetters:focus{
+
+    position: relative;
+    top: 100px;
+    left:-10px;
+    height: 400px;
+    width: 240px;
+
+    background: transparent;
+    border-style: none;
+
+    color: #000033;
+    #color: #330000;
+    font-size: 1.2em;
+
+    resize: none;
+}
+
+/*---------------chat input box---------------*/
+
+.chatInputBox{
+
+    transform: scale(1.1);
+
+    z-index: 1;
+
+    position: absolute;
+    bottom: -59px;
+    left: 30px;
+    background-image: url(images/chatbox.png);
+    background-repeat:  no-repeat;
+    width: 329px;
+    height: 46px;
+    text-align: center;
+    font-size: 1.2em;
+
+    transition: transform 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6)
+}
+.chatInputBox:focus{
+
+    background-image: url(images/chatbox.png);
+    background-repeat:  no-repeat;
+
+    text-align: center;
+    font-size: 1.2em;
+
+    transform: scale(1.13);
+}
+.chatInputBox:hover{
+
+    background-image: url(images/chatbox.png);
+    background-repeat:  no-repeat;
+
+    text-align: center;
+    font-size: 1.2em;
+
+    transform: scale(1.13);
+}
+
+/*---------------send button---------------*/
+
+.sendButton{
+    position: absolute;
+    background-image: url(images/sendGold.png);
+    background-repeat:  no-repeat;
+    width: 179px;
+    height: 71px;
+    top: 0px;
+    left: 358px;
+    z-index: 1;
+
+    transform: scale(0.75);
+
+    transition: transform 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6), background-image 0.3s ease-in-out;
+}
+.sendButton:hover{
+    background-image: url(images/sendRed.png);
+    background-repeat:  no-repeat;
+    width: 179px;
+    height: 71px;
+
+    transform: scale(0.8);
+}
+.sendButton:focus{
+    background-image: url(images/sendRed.png);
+    background-repeat:  no-repeat;
+    width: 179px;
+    height: 71px;
+
+    transform: scale(0.8);
+}
+.sendButton:active{
+    background-image: url(images/sendRed.png);
+    background-repeat:  no-repeat;
+    width: 179px;
+    height: 71px;
+
+    transform: scale(0.76);
+}
+
+/*---------------roll button---------------*/
+
+.rollButton{
+    position: relative;
+    left: -30px;
+    background-image: url(images/rollGold.png);
+    background-repeat:  no-repeat;
+    width: 252px;
+    height: 71px;
+
+    transform: scale(0.75);
+
+    transition: transform 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6), background-image 0.3s ease-in-out;
+}
+.rollButton:hover{
+    background-image: url(images/rollRed.png);
+    background-repeat:  no-repeat;
+    width: 252px;
+    height: 71px;
+
+    transform: scale(0.80);
+}
+.rollButton:focus{
+    background-image: url(images/rollRed.png);
+    background-repeat:  no-repeat;
+    width: 252px;
+    height: 71px;
+
+    transform: scale(0.80);
+}
+.rollButton:active{
+    background-image: url(images/rollRed.png);
+    background-repeat:  no-repeat;
+    width: 252px;
+    height: 71px;
+
+    #transform: scale(0.80);
+    animation: rollClick 3s;
+}
+
+/*---------------image button---------------*/
+
+.imageButton{
+    position: relative;
+    left: -80px;
+    background-image: url(images/imageGold.png);
+    background-repeat:  no-repeat;
+    width: 205px;
+    height: 71px;
+
+    transform: scale(0.75);
+
+    transition: transform 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6), background-image 0.3s ease-in-out;
+}
+.imageButton:hover{
+    background-image: url(images/imageRed.png);
+    background-repeat:  no-repeat;
+    width: 205px;
+    height: 71px;
+
+    transform: scale(0.80);
+}
+.imageButton:focus{
+    background-image: url(images/imageRed.png);
+    background-repeat:  no-repeat;
+    width: 205px;
+    height: 71px;
+
+    transform: scale(0.80);
+}
+.imageButton:active{
+    background-image: url(images/imageRed.png);
+    background-repeat:  no-repeat;
+    width: 205px;
+    height: 71px;
+
+    transform: scale(0.76);
+}
+
+@keyframes rollClick{
+    0%{-webkit-transform: rotate(0deg);}
+    2%{-webkit-transform: rotate(-6deg);}
+    3.5%{-webkit-transform: rotate(6deg);}
+    5%{-webkit-transform: rotate(0deg);}
+    100%{-webkit-transform: rotate(0deg);}
+}
+
+/*---------------unused heading---------------*/
+
+.heading{
+    align: center;
+    color: green;
+    font-size: xx-large;
+    font-weight: bolder;
+    background-color: red;
+}
