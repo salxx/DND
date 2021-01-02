@@ -12,7 +12,19 @@
 
 if(window.Worker){
 
+    function sendMessage(message){
+        
+    }
 
+    onmessage = function(message){
+        if(message.type){
+            switch(message.type){
+                case "Message":
+                    sendMessage(message.message);
+                    break;
+            }
+        }
+    }
 
 
 
