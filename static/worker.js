@@ -6,8 +6,8 @@
  * }
  * 
  * Message Endpoints:
- * -> sendMessage(Message msg)
- * <- receiveMessage(Message[] msgs)
+ * -> sendMessage({type: 'Message', message: Message})
+ * <- receiveMessage({type: 'MessageHistory', messages: Message[]})
  */
 
 if(window.Worker){
