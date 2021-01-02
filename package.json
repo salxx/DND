@@ -4,7 +4,7 @@
   "description": "Student Project for Web Technology",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
