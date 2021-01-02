@@ -12,7 +12,7 @@
  */
 
 
-function sendMessage(message){
+const sendMessage = (message)=>{
     console.log(message);
     postMessage({type: "MessageHistory", messages: [message]})
     // Actually send to server
@@ -20,7 +20,7 @@ function sendMessage(message){
 
 // Receive via Websocket instead of bounceBack
 
-onmessage = function({data}){
+onmessage = ({data})=>{
     if(data && data.type){
         switch(data.type){
             case "Message":
