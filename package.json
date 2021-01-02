@@ -1,0 +1,25 @@
+{
+  "name": "dnd",
+  "version": "1.0.0",
+  "description": "Student Project for Web Technology",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salxx/DND.git"
+  },
+  "keywords": [
+    "StudentProject"
+  ],
+  "author": "Alexander Satory, Jihad Itani, Florian Patrick Löbl, Ludwig Keuler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/salxx/DND/issues"
+  },
+  "homepage": "https://github.com/salxx/DND#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
