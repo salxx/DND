@@ -11,10 +11,12 @@
  * <- receiveMessage({type: 'MessageHistory', messages: Message[]})
  */
 
+const mHistory = [];
 
 const sendMessage = (message)=>{
     console.log(message);
-    postMessage({type: "MessageHistory", messages: [message]})
+    mHistory.push(message);
+    postMessage({type: "MessageHistory", messages: mHistory})
     // Actually send to server
 }
 
