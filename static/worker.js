@@ -15,7 +15,10 @@
 function sendMessage(message){
     console.log(message);
     postMessage({type: "MessageHistory", messages: [message]})
+    // Actually send to server
 }
+
+// Receive via Websocket instead of bounceBack
 
 onmessage = function({data}){
     if(data && data.type){

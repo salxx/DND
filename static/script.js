@@ -17,6 +17,8 @@ worker.onmessage = (({data})=>{
         switch(data.type){
             case "MessageHistory":
                 chatDisplay.innerHTML = JSON.stringify(data.messages);
+                // Formatting messages goes HERE
+                break;
         }
     }
 })
