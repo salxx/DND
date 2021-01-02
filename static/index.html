@@ -10,11 +10,11 @@
 <body>
     <script>
         window.onload = function(){
-            var canvas = document.getElementByID("myCanvas");
+            var canvas = document.getElementById("myCanvas");
             var ctx = canvas.getContext("2d");
             var img = new Image(0,0);
-            img.src = "play_map.png";
-            ctx.drawImage(img, 10, 10);
+            img.src = "images/play_map.png";
+            ctx.drawImage(img,0,0);
         }
     </script>
     <div class="dndContainer">
