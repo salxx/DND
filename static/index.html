@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>D N D</title>
     <link rel="stylesheet" href="style.css">
-    <link href="//db.onlinewebfonts.com/c/e163c6518afdb5035f3933758c68e480?family=SylfaenW01-Regular" rel="stylesheet" type="text/css"/>
-    
+    <link href="//db.onlinewebfonts.com/c/e163c6518afdb5035f3933758c68e480?family=SylfaenW01-Regular" rel="stylesheet"
+        type="text/css" />
+
 </head>
+
 <body>
+
     <script>
-        window.onload = function(){
+        window.onload = function () {
             var canvas = document.getElementById("myCanvas");
             var ctx = canvas.getContext("2d");
-            var img = new Image(0,0);
+            var img = new Image(0, 0);
             img.src = "maps/canyon_map.jpg";
-            img.addEventListener("load",function(){
-                ctx.drawImage(img,75,75,canvas.width, canvas.height);
+            img.addEventListener("load", function () {
+                ctx.drawImage(img, 75, 75, canvas.width, canvas.height);
             });
         }
     </script>
@@ -23,20 +27,36 @@
         <div class="head">
             <span class="heading"></span>
         </div>
-        <div class="rowChatMap"><!-- chat and chat buttons -->
+        <div class="rowChatMap">
+            <!-- chat and chat buttons -->
             <div class="colChat">
-                <div class="chatTextOutside"><form><textarea id="chatDisplay" name="chatDisplay" readonly class="chatTextLetters" rows="10" cols="30">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magniSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magniSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni</textarea></form></div>
-                <div class="chatButtons"><form><input id="chatInput" class="chatInputBox" type="text"><button id="chatSendButton" class="sendButton" type="button"></button></form></div>
+                <div class="chatTextOutside">
+                    <form><textarea id="chatDisplay" name="chatDisplay" readonly class="chatTextLetters" rows="10"
+                            cols="30">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magniSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magniSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni</textarea>
+                    </form>
+                </div>
+                <div class="chatButtons">
+                    <form><input id="chatInput" class="chatInputBox" type="text"><button id="chatSendButton"
+                            class="sendButton" type="button"></button></form>
+                </div>
             </div>
-           
-            <div class="colMap"><!-- map and map buttons -->
-                <div class="mapImage"> <canvas id= "myCanvas" width="900" height="611">your browser does not support the HTML canvas tag</canvas></div>
-                
-                <div class="mapButtons">  <button class="rollButton"></button><button class="imageButton"></button>  </div>
-                <div class="skell"><img src="images/skell.png" alt="image of two skelletons cheering" width="103" height="126"></div>
+
+            <div class="colMap">
+                <!-- map and map buttons -->
+                <div class="mapImage"> <canvas id="myCanvas" width="900" height="611">your browser does not support the
+                        HTML canvas tag</canvas></div>
+
+                <div class="mapButtons"> <button class="rollButton"></button><button class="imageButton"></button>
+                </div>
+                <div class="skell"><img src="images/skell.png" alt="image of two skelletons cheering" width="103"
+                        height="126"></div>
             </div>
         </div>
-</div>
+    </div>
 </body>
+
+
+
 <script src="./script.js"></script>
+
 </html>
