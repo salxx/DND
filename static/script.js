@@ -16,7 +16,8 @@ ws.onopen = () => {
     console.log('Connection opened!');
 }
 ws.onmessage = ({ data }) => {
-    worker.postMessage({ type: "Message", message: { dateTime: new Date().toISOString(), message: data } });
+    data = JSON.parse(data);
+    worker.postMessage({ type: "Message", message: { client: data.client, dateTime: new Date().toISOString(), message: data.message } });
 }
 ws.onclose = function () {
     ws = null;
@@ -30,17 +31,24 @@ chatSendButton.addEventListener("click", () => {
             showMessage("No websocket connection available!");
             return;
         }
-        ws.send(text);
-        worker.postMessage({ type: "Message", message: { dateTime: new Date().toISOString(), message: text } });
+        ws.send(JSON.stringify({client: "myID", message: text}));
+        worker.postMessage({ type: "Message", message: { client: "Me", dateTime: new Date().toISOString(), message: text } });
     }
 });
+
+formatTime = (time) => {
+    return time.match(/T(..:..:..)/)[1];
+}
 
 worker.onmessage = (({ data }) => {
     if (data && data.type) {
         switch (data.type) {
             case "MessageHistory":
-                chatDisplay.innerHTML = JSON.stringify(data.messages);
-                // Formatting messages goes HERE
+                var combinedText = "";
+                data.messages.forEach(element => {
+                    combinedText += "[" + formatTime(element.dateTime) + "] " + element.client + ": " + element.message + "\n";
+                });
+                chatDisplay.innerHTML  = combinedText;
                 break;
         }
     }

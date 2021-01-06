@@ -97,15 +97,15 @@ textarea{
     font-family: 'SylfaenW01-Regular', Fallback, Serif;
 }
 
-/*canvas{
+canvas{
     position: relative;
     left: 0px;
     top: 131px;
-    background-image: url(images/play_map.png);
+    background-image: url(images/mapPergament.png);
     border:0px solid #000000;
     font-family: 'SylfaenW01-Regular', Fallback, Serif;
 }
-*/
+
 /*---------------scrollbar---------------*/
 
 /* width */
