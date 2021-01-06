@@ -13,21 +13,49 @@
 
 const mHistory = [];
 
-const sendMessage = (message)=>{
+const addMessageToHistory = (message)=>{
     console.log(message);
     mHistory.push(message);
     postMessage({type: "MessageHistory", messages: mHistory})
-    // Actually send to server
 }
 
-// Receive via Websocket instead of bounceBack
+const sendMessageOverWs = (message)=>{
+    if (!ws) {
+        showMessage("No websocket connection available!");
+        return;
+    }
+    ws.send(JSON.stringify({client: "Other client", message: message.message}));
+}
 
 onmessage = ({data})=>{
     if(data && data.type){
         switch(data.type){
             case "Message":
-                sendMessage(data.message);
+                console.log("Message received");
+                addMessageToHistory(data.message);
+                sendMessageOverWs(data.message);
                 break;
         }
     }
+}
+
+let ws;
+
+if (ws) {
+    ws.onerror = ws.onopen = ws.onclose = null;
+    ws.close();
+}
+
+ws = new WebSocket('ws://localhost:8080');
+ws.onopen = () => {
+    console.log('Connection opened!');
+}
+ws.onmessage = ({ data }) => {
+    console.log(data);
+    data = JSON.parse(data);
+    addMessageToHistory({ client: data.client, dateTime: new Date().toISOString(), message: data.message });
+}
+
+ws.onclose = function () {
+    ws = null;
 }

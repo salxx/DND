@@ -15,7 +15,7 @@ wss.on('connection', function connection(webSocket) {
             }
         })
     })
-    webSocket.send('Ahoi');
+    webSocket.send(JSON.stringify({client: "Server", message: "Ahoi!"}));
 });
 
 app.use(express.static('static'));
