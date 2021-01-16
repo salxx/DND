@@ -67,6 +67,7 @@ function updatePosition() {
 function myClick(canvas) {
     if(click)
       click = false;
+      //TODO: send to other clients
     else {
         Object.entries(imgs).forEach(([key,value]) => {
             if(mousePos.x > value.posX && mousePos.x < value.posX + value.image.width && mousePos.y > value.posY && mousePos.y < value.posY + value.image.height) {
