@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
     <div class="dndContainer">
         <div class="head">
             <span class="heading"></span>
@@ -29,19 +28,9 @@
                             class="sendButton" type="button"></button></form>
                 </div>
             </div>
-
             <div class="colMap">
                 <!-- map and map buttons -->
-                <div class="mapImage"> <canvas id="myCanvas" width="900" height="611" onclick="myClick(this)">your browser does not support the
-                        HTML canvas tag</canvas></div>
-
-                <div class="mapButtons"> <button class="rollButton"></button><button class="imageButton"></button>
-                </div>
-                <div class="skell"><img src="images/skell.png" alt="image of two skelletons cheeri
-
-            <div class="colMap">
-                <!-- map and map buttons -->
-                <div class="mapImage"> <canvas id="myCanvas" width="900" height="611" onclick="myClick(this)">your browser does not support the
+                <div class="mapImage"> <canvas id="myCanvas" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" width="900" height="611" onclick="myClick(this)">your browser does not support the
                         HTML canvas tag</canvas></div>
 
                 <div class="mapButtons"> <button class="rollButton"></button><button class="imageButton"></button>
@@ -52,8 +41,6 @@
         </div>
     </div>
 </body>
-
-
 
 <script src="./script.js"></script>
 

@@ -42,9 +42,6 @@ worker.onmessage = (({ data }) => {
 window.onload = function () {
     img.src = "maps/canyon_map.jpg";
     img2.src = "images/LTR.png";
-    imgs[0] = {image:img2, posX:(canvas.width / 2), posY:(canvas.height / 2)};
-    imgs[1] = {image:img2, posX:(canvas.width / 2), posY:(canvas.height / 2)};
-    imgs[2] = {image:img2, posX:(canvas.width / 2), posY:(canvas.height / 2)};
     img.addEventListener("load", function () {
         renderMap();
     });
@@ -92,3 +89,36 @@ canvas.addEventListener('mousemove', function(evt) {
       y: evt.clientY - rect.top
     };
   }
+
+function dropHandler(ev) {
+    console.log("drop detected");
+
+    //stop browser default reaction when dropping into, so we can run our custom code
+    ev.preventDefault();
+
+    if (ev.dataTransfer.items) {
+        //use DataTransferItemList interface for the image
+        for (var i = 0; i < ev.dataTransfer.items.length; i++) {
+            //only images
+            if(ev.dataTransfer.items[i].type.match('image.*')){
+                var file = ev.dataTransfer.items[i].getAsFile();
+                console.log('... image[' + i + '].name = ' + file.name);
+                var img_in = new Image();
+                var fileReader = new FileReader();
+                fileReader.addEventListener("load", e => {
+                    var img_in = new Image();
+                    img_in.src = fileReader.result;
+                    imgs[Object.entries(imgs).length] = {image:img_in, posX:(canvas.width / 2), posY:(canvas.height / 2)};
+                });
+                fileReader.readAsDataURL(file);
+            }
+        }
+    }
+}
+
+function dragOverHandler(ev) {
+    console.log("image dropped");
+
+    //stop browser default reaction when dropping into, so we can run our custom code
+    ev.preventDefault();
+}
