@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
     <script>
         window.onload = function () {
             var canvas = document.getElementById("myCanvas");
@@ -44,7 +43,7 @@
 
             <div class="colMap">
                 <!-- map and map buttons -->
-                <div class="mapImage"> <canvas id="myCanvas" width="900" height="611">your browser does not support the
+                <div class="mapImage"> <canvas id="myCanvas" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" width="900" height="611">your browser does not support the
                         HTML canvas tag</canvas></div>
 
                 <div class="mapButtons"> <button class="rollButton"></button><button class="imageButton"></button>
@@ -57,8 +56,6 @@
         </div>
     </div>
 </body>
-
-
 
 <script src="./script.js"></script>
 
