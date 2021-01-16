@@ -13,18 +13,26 @@
 
 const mHistory = [];
 
-const addMessageToHistory = (message) => {
-    console.log(message);
-    mHistory.push(message);
+const addMessageToHistory = (data) => {
+    console.log(data.message);
+    mHistory.push(data.message);
     postMessage({ type: "MessageHistory", messages: mHistory })
 }
 
-const sendMessageOverWs = (message) => {
+const addImage = (message) => {
+    postMessage({ type: "ImageReceived", image: message })
+}
+
+const updateImagePositions = (message) => {
+    postMessage({ type: "ImageReplaced", imageMap: message })
+}
+
+const sendDataOverWs = (message) => {
     if (!ws) {
         showMessage("No websocket connection available!");
         return;
     }
-    ws.send(JSON.stringify({ client: message.client, message: message.message }));
+    ws.send(JSON.stringify({ client: message.client, message: message }));
 }
 
 onmessage = ({ data }) => {
@@ -32,18 +40,17 @@ onmessage = ({ data }) => {
         switch (data.type) {
             case "Message":
                 console.log("Message received");
-                addMessageToHistory(data.message);
-                sendMessageOverWs(data.message);
+                addMessageToHistory(data);
+                sendDataOverWs(data);
                 break;
-            /* case "Image":
-                 console.log("Image received");
-                 console.log(data.message);
-                 var canvas = document.getElementById('myCanvas'),
-                     context = canvas.getContext('2d');
-                 var image = new Image();
-                 image.src = data.message;
-                 context.drawImage(image, 100, 100);
-                 break;*/
+            case "ImageAdded":
+                console.log("Image received");
+                sendDataOverWs(data);
+                break;
+            case "ImagePositionChanged":
+                console.log("Image position changed");
+                sendDataOverWs(data);
+                break;
         }
     }
 }
@@ -60,9 +67,19 @@ ws.onopen = () => {
     console.log('Connection opened!');
 }
 ws.onmessage = ({ data }) => {
-    console.log(data);
     data = JSON.parse(data);
-    addMessageToHistory({ client: data.client, dateTime: new Date().toISOString(), message: data.message });
+    message = data.message;
+    switch (message.type) {
+        case "Message":
+            addMessageToHistory({ client: data.client, dateTime: new Date().toISOString(), message: message.message });
+            break;
+        case "ImageAdded":
+            addImage(message.message);
+            break;
+        case "ImagePositionChanged":
+            updateImagePositions(message.message);
+            break;
+    }
 }
 
 ws.onclose = function () {
