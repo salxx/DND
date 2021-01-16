@@ -30,3 +30,37 @@ worker.onmessage = (({ data }) => {
         }
     }
 })
+
+
+function dropHandler(ev) {
+    console.log("drop detected");
+
+    //stop browser default reaction when dropping into, so we can run our custom code
+    ev.preventDefault();
+
+    if (ev.dataTransfer.items) {
+        //use DataTransferItemList interface for the image
+        for (var i = 0; i < ev.dataTransfer.items.length; i++) {
+            //only images
+            if(ev.dataTransfer.items[i].type.match('image.*')){
+                alert("trying to draw");
+                var file = ev.dataTransfer.items[i].getAsFile();
+                console.log('... image[' + i + '].name = ' + file.name);
+
+                var canv = document.getElementById("myCanvas");
+                var canvtx = canv.getContext("2d");
+                var mouse_x = e.dataTransfer.getData("mouse_position_x");
+                var mouse_y = e.dataTransfer.getData("mouse_position_y");
+                var image = new Image(0, 0);
+                image = ev.dataTransfer.items[i];
+
+            }
+        }
+}
+
+function dragOverHandler(ev) {
+    console.log("image dropped");
+
+    //stop browser default reaction when dropping into, so we can run our custom code
+    ev.preventDefault();
+}
