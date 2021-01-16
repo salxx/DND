@@ -43,13 +43,11 @@ worker.onmessage = (({ data }) => {
                 renderMap();
                 break;
             case "ImageReplaced":
-                console.log(data);
-                const bla = JSON.parse(data.imageMap);
-                console.log(bla);
+                const receivedMap = JSON.parse(data.imageMap);
 
-                for (i = 0; i < Object.entries(bla).length; i++) {
-                    imgs[i].posX = bla[i].posX;
-                    imgs[i].posY = bla[i].posY;
+                for (i = 0; i < Object.entries(receivedMap).length; i++) {
+                    imgs[i].posX = receivedMap[i].posX;
+                    imgs[i].posY = receivedMap[i].posY;
                 }
                 renderMap();
         }
