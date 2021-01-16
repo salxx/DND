@@ -24,7 +24,7 @@ const sendMessageOverWs = (message)=>{
         showMessage("No websocket connection available!");
         return;
     }
-    ws.send(JSON.stringify({client: "Other client", message: message.message}));
+    ws.send(JSON.stringify({client: message.client, message: message.message}));
 }
 
 onmessage = ({data})=>{

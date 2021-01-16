@@ -184,6 +184,47 @@ canvas{
     resize: none;
 }
 
+/*---------------name input box---------------*/
+
+.nameInputBox{
+
+    transform: scale(1.1);
+
+    z-index: 1;
+
+    position: absolute;
+    bottom: -10px;
+    left: 22px;
+    background-image: url(images/namebox.png);
+    background-repeat:  no-repeat;
+    width: 152px;
+    height: 46px;
+    text-align: center;
+    font-size: 1.2em;
+
+    transition: transform 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6)
+}
+.nameInputBox:focus{
+
+    background-image: url(images/namebox.png);
+    background-repeat:  no-repeat;
+
+    text-align: center;
+    font-size: 1.2em;
+
+    transform: scale(1.13);
+}
+.nameInputBox:hover{
+
+    background-image: url(images/namebox.png);
+    background-repeat:  no-repeat;
+
+    text-align: center;
+    font-size: 1.2em;
+
+    transform: scale(1.13);
+}
+
 /*---------------chat input box---------------*/
 
 .chatInputBox{

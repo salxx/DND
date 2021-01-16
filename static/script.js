@@ -1,5 +1,6 @@
 var worker = new Worker('worker.js');
 
+var nameInput = document.getElementById("nameInput");
 var chatInput = document.getElementById("chatInput");
 var chatSendButton = document.getElementById("chatSendButton");
 var chatDisplay = document.getElementById("chatDisplay");
@@ -8,7 +9,7 @@ chatSendButton.addEventListener("click", () => {
     if (chatInput.value.trim()) {
         var text = chatInput.value.trim();
         chatInput.value = "";
-        worker.postMessage({ type: "Message", message: { client: "Me", dateTime: new Date().toISOString(), message: text } });
+        worker.postMessage({ type: "Message", message: { client: nameInput.value.trim(), dateTime: new Date().toISOString(), message: text } });
     }
 });
 
