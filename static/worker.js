@@ -35,15 +35,15 @@ onmessage = ({ data }) => {
                 addMessageToHistory(data.message);
                 sendMessageOverWs(data.message);
                 break;
-            case "Image":
-                console.log("Image received");
-                console.log(data.message);
-                var canvas = document.getElementById('myCanvas'),
-                    context = canvas.getContext('2d');
-                var image = new Image();
-                image.src = data.message;
-                context.drawImage(image, 100, 100);
-                break;
+            /* case "Image":
+                 console.log("Image received");
+                 console.log(data.message);
+                 var canvas = document.getElementById('myCanvas'),
+                     context = canvas.getContext('2d');
+                 var image = new Image();
+                 image.src = data.message;
+                 context.drawImage(image, 100, 100);
+                 break;*/
         }
     }
 }

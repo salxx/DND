@@ -11,7 +11,7 @@ html, body{
     height: 100%;
     margin: auto;
     text-align: center;
-    //background-color: #252525;
+    background-color: #252525;
     font-family: 'SylfaenW01-Regular', Fallback, Serif;
     overflow-x: hidden;
     background:
@@ -178,7 +178,6 @@ canvas{
     border-style: none;
 
     color: #000033;
-    #color: #330000;
     font-size: 1.2em;
 
     resize: none;
@@ -356,8 +355,6 @@ canvas{
     background-repeat:  no-repeat;
     width: 252px;
     height: 71px;
-
-    #transform: scale(0.80);
     animation: rollClick 3s;
 }
 
