@@ -12,17 +12,6 @@
 
 <body>
 
-    <script>
-        window.onload = function () {
-            var canvas = document.getElementById("myCanvas");
-            var ctx = canvas.getContext("2d");
-            var img = new Image(0, 0);
-            img.src = "maps/canyon_map.jpg";
-            img.addEventListener("load", function () {
-                ctx.drawImage(img, 75, 75, canvas.width, canvas.height);
-            });
-        }
-    </script>
     <div class="dndContainer">
         <div class="head">
             <span class="heading"></span>
@@ -43,7 +32,16 @@
 
             <div class="colMap">
                 <!-- map and map buttons -->
-                <div class="mapImage"> <canvas id="myCanvas" width="900" height="611">your browser does not support the
+                <div class="mapImage"> <canvas id="myCanvas" width="900" height="611" onclick="myClick(this)">your browser does not support the
+                        HTML canvas tag</canvas></div>
+
+                <div class="mapButtons"> <button class="rollButton"></button><button class="imageButton"></button>
+                </div>
+                <div class="skell"><img src="images/skell.png" alt="image of two skelletons cheeri
+
+            <div class="colMap">
+                <!-- map and map buttons -->
+                <div class="mapImage"> <canvas id="myCanvas" width="900" height="611" onclick="myClick(this)">your browser does not support the
                         HTML canvas tag</canvas></div>
 
                 <div class="mapButtons"> <button class="rollButton"></button><button class="imageButton"></button>
