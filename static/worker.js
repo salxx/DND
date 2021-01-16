@@ -13,27 +13,36 @@
 
 const mHistory = [];
 
-const addMessageToHistory = (message)=>{
+const addMessageToHistory = (message) => {
     console.log(message);
     mHistory.push(message);
-    postMessage({type: "MessageHistory", messages: mHistory})
+    postMessage({ type: "MessageHistory", messages: mHistory })
 }
 
-const sendMessageOverWs = (message)=>{
+const sendMessageOverWs = (message) => {
     if (!ws) {
         showMessage("No websocket connection available!");
         return;
     }
-    ws.send(JSON.stringify({client: message.client, message: message.message}));
+    ws.send(JSON.stringify({ client: message.client, message: message.message }));
 }
 
-onmessage = ({data})=>{
-    if(data && data.type){
-        switch(data.type){
+onmessage = ({ data }) => {
+    if (data && data.type) {
+        switch (data.type) {
             case "Message":
                 console.log("Message received");
                 addMessageToHistory(data.message);
                 sendMessageOverWs(data.message);
+                break;
+            case "Image":
+                console.log("Image received");
+                console.log(data.message);
+                var canvas = document.getElementById('myCanvas'),
+                    context = canvas.getContext('2d');
+                var image = new Image();
+                image.src = data.message;
+                context.drawImage(image, 100, 100);
                 break;
         }
     }

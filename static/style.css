@@ -321,6 +321,20 @@ canvas{
 
     transition: transform 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6), background-image 0.3s ease-in-out;
 }
+
+.dummyButton{
+    position: relative;
+    left: -30px;
+    background-image: url(images/dummy-button.jpg);
+    background-repeat:  no-repeat;
+    width: 252px;
+    height: 71px;
+
+    transform: scale(0.75);
+
+    transition: transform 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6), background-image 0.3s ease-in-out;
+}
+
 .rollButton:hover{
     background-image: url(images/rollRed.png);
     background-repeat:  no-repeat;
