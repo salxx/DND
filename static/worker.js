@@ -52,6 +52,10 @@ onmessage = ({ data }) => {
                 console.log("Image position changed");
                 sendDataOverWs(data);
                 break;
+            case "ImageDeleted":
+                console.log("Image deleted");
+                sendDataOverWs(data)
+                break;
         }
     }
 }
@@ -96,6 +100,9 @@ ws.onmessage = ({ data }) => {
             break;
         case "ImagePositionChanged":
             updateImagePositions(message.message);
+            break;
+        case "ImageDeleted":
+            postMessage({ type: "ImageDeleted", message: message.message })
             break;
     }
 }
