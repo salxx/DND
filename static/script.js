@@ -8,7 +8,6 @@ var chatDisplay = document.getElementById("chatDisplay");
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var img = new Image();
-var img2 = new Image();
 const imgs = {};
 var mousePos;
 var click = false;
@@ -67,7 +66,6 @@ worker.onmessage = (({ data }) => {
 
 window.onload = function () {
     img.src = "maps/canyon_map.jpg";
-    img2.src = "images/LTR.png";
     img.addEventListener("load", function () {
         renderMap();
     });
