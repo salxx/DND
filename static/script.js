@@ -125,9 +125,10 @@ window.addEventListener("keyup", function (event) {
 
 canvas.addEventListener('mousemove', function (evt) {
     mousePos = getMousePos(canvas, evt);
-    if (click)
+    if (click) {
         updatePosition();
-    renderMap();
+        renderMap();
+    }
 }, false)
 
 function getMousePos(canvas, evt) {
@@ -195,6 +196,7 @@ function drawImageOnCanvas(file){
         console.log(imgs);
         imgs[Object.entries(imgs).length] = { image: img_in, posX: (canvas.width / 2), posY: (canvas.height / 2) };
         worker.postMessage({ type: "ImageAdded", message: { image: fileReader.result, posX: (canvas.width / 2), posY: (canvas.height / 2) } });
+        renderMap();
     });
     fileReader.readAsDataURL(file);
 }
