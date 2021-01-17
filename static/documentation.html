@@ -8,32 +8,97 @@
 <body>
 
 <div class="sidebar">
-    <a class="head" href="#overview">Overview</a>
-    <a class="head" href="#model">Model</a>
-    <a href="#">Web Workers</a>
-    <a class="head" href="#view">View</a>
-    <a href="#">CSS</a>
-    <a class="head" href="#controller">Controller</a>
-    <a href="#">JS</a>
+    <a class="head" href="#architecture">Architecture</a>
+    <a href="#nodejs">Nodejs Server</a>
+    <a href="#multimaster">Client Multi-Master Pattern</a>
+    <a href="#mvc">MVC</a>
+    <a class="head" href="#webworker">Web worker (worker.js)</a>
+    <a href="#communicationjs">Communication script.js and worker.js</a>
+    <a href="#chatinput">New chat input</a>
+    <a href="#websocketwebworker">Web socket in the Web Worker</a>
+    <a class="head" href="#websocket">Web socket</a>
+    <a href="#transmitteddata">Transmitted data</a>
 </div>
 
 <div class="content">
-    <h2>Responsive Sidebar Example</h2>
-    <p><a id="overview"></a>overview </p>
-    <p>lorem</p>
-    <h3>ipsum</h3>
-    <p></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>lorem</p>
-    <p></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>ipsum</p>
-    <p><a id="model"></a></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>model</p>
-    <p><a id="view"></a></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>view</p>
-    <p><a id="controller"></a></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>controller</p>
-    <p></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></p>
-    <p></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></p>
-    <p></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></p>
-    <p></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></p>
-    <p></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></p>
-    <p></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></p>
-    <p></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></p>
+
+
+    <a id="architecture"><h2>Architecture</h2></a>
+    <a id="nodejs"><h3>Nodejs Server</h3></a>
+    
+    <b>Nodejs</b> as a server (localhost:8080) in the background:<br>
+    <pre>
+    <code>start npm</code> 
+    </pre>
+    Hosts a websocket server with a simple broadcasting script to distribute messages to other clients.
+    <pre><code>wss.clients.forEach(function each(player) {
+        ...
+        player.send(data);
+    })</code> </pre>
+    
+    <a id="multimaster"><h3>Client Multi-Master Pattern</h3></a>
+    Our client are in a Multi-Master relationship. 
+    This means any client sends data to the server which is then broadcasted to every client. 
+    Every client behaves the same.
+    
+    <a id="mvc"><h3>MVC</h3></a>
+    On the client side we separated view (script.js) and control with a <i> web worker</i> (worker.js). The worker keeps track of the chat history and manages the <i>web socket</i> requests.
+    The worker does not interact with the UI but updates the script.js using events. On the other side, script.js does not know anything about the web sockets.<br>
+    Communication between script.js and worker.js is handled with typed messages.
+    
+    <a id="webworker"><h2>Web worker (worker.js)</h2></a>
+    The<i> web worker</i>  is instantiated by our main script (script.js):
+    <pre><code>var worker = new Worker('worker.js');</code> </pre>
+    <a id="communicationjs"><h3>Communication script.js and worker.js</h3></a>
+    Communication between worker and main-script is using the web worker events:
+    <pre><code>in script.js:
+    worker.postMessage(...);
+    worker.onmessage = () => { ... }</code> </pre>
+    <pre><code>in worker.js:
+    postMessage(...);
+    onmessage = () => { ... }</code> </pre>
+    To handle an event appropriately, a type was given to the transmitted data. It can be one of the following:
+    <pre><code>"Message"
+    "ImageAdded"
+    "ImagePositionChanged"
+    "ImageDeleted"</code></pre>
+    <a id="chatinput"><h3>New chat input</h3></a>
+    The web worker keeps track of the chat history and adds to it with every new line received, listening to the type "Message":
+    <pre><code>onmessage = ({ data }) => {
+        if (data && data.type) {
+            switch (data.type) {
+                case "Message":
+                    addMessageToHistory(data);
+        ...</code> </pre>
+    The web worker also handles the dice role, listening to the following regex and handling it accordingly:
+    <pre><code>let regex = new RegExp('^([1-9])[d]([0-9][0-9]?[0-9]?)$');
+    
+    '1d20' -> one dice with 20 values
+    '2d6' -> two dice with 6 values</code></pre>
+    <a id="websocketwebworker"><h3>Web socket in the Web Worker</h3></a>
+    The web worker instantiates a web socket to the nodejs server and handles incoming and outgoing messages:
+    <pre><code>let ws;
+    ws = new WebSocket('ws://localhost:8080');
+    
+    ws.send(...);
+    ws.onmessage = () => { ... };</code> </pre>
+    Any incoming messages via the web socket are rerouted to the script.js script by the worker. The script.js script handles the UI.
+    
+    <a id="websocket"><h2>Web socket</h2></a>
+    A websocket is established by each client's web worker and connects it to the nodejs server. Distribution of data is in JSON form including the client's chosen name and the data:
+    <pre><code>ws.send(JSON.stringify({ client: message.client, message: message }));</code> </pre>
+    
+    Upon receiving an event, the message type is considered and an appropriate handling is taken care of. Message types are:
+    <pre><code>message.type:
+      "Message"
+      "ImageAdded"
+      "ImagePositionChanged"
+      "ImageDeleted"</code></pre>
+    The necessary data is transmitted to the script.js, which appropriately updates the UI.
+    <a id="transmitteddata"><h3>Transmitted data</h3></a>
+    The web socket itself does not know which data it sends. The data is typed by the <i>data.message.type</i> attribute and taken care of by the web worker.
+    The data can either be text, coordinates, images, or image id, respectively for the given messge types.
+    </div>
 
 </div>
 
