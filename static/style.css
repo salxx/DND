@@ -185,6 +185,24 @@ canvas{
 
 /*---------------name input box---------------*/
 
+a:link {
+color: gold;
+}
+/* visited link */
+a:visited {
+    color: gold;
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: gold;
+  }
+  
+  /* selected link */
+  a:active {
+    color: gold;
+  }
+
 .nameInputBox{
 
     transform: scale(1.1);
