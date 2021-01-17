@@ -60,7 +60,7 @@ onmessage = ({ data }) => {
     }
 }
 
-let regex = new RegExp('^([0-9])[d]([0-9][0-9]?[0-9]?)$');
+let regex = new RegExp('^([1-9])[d]([0-9][0-9]?[0-9]?)$');
 
 function rollDiceRegexCheck(data) {
     const found = data.message.message.match(regex);
@@ -78,16 +78,17 @@ function rollDiceRegexCheck(data) {
 }
 
 let ws;
+ws = new WebSocket('ws://localhost:8080');
 
 if (ws) {
     ws.onerror = ws.onopen = ws.onclose = null;
     ws.close();
 }
 
-ws = new WebSocket('ws://localhost:8080');
 ws.onopen = () => {
     console.log('Connection opened!');
 }
+
 ws.onmessage = ({ data }) => {
     data = JSON.parse(data);
     message = data.message;
