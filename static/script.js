@@ -170,17 +170,18 @@ function dropHandler(evt) {
 
 function dragOverHandler(ev) {
     console.log("image dropped");
-
     //stop browser default reaction when dropping into, so we can run our custom code
     ev.preventDefault();
 }
 
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
 function handleFileSelect(evt){
     var files = evt.target.files; //FileList of File objects
     for(var i = 0, file; file = files[i]; i++){
         drawImageOnCanvas(file);
     }
+    evt.target.value = null;
 }
 
 function drawImageOnCanvas(file){
@@ -190,8 +191,8 @@ function drawImageOnCanvas(file){
     fileReader.addEventListener("load", e => {
         var img_in = new Image();
         img_in.src = fileReader.result;
+        console.log(imgs);
         imgs[Object.entries(imgs).length] = { image: img_in, posX: (canvas.width / 2), posY: (canvas.height / 2) };
-        //TODO FIXME FL
         worker.postMessage({ type: "ImageAdded", message: { image: fileReader.result, posX: (canvas.width / 2), posY: (canvas.height / 2) } });
     });
     fileReader.readAsDataURL(file);
