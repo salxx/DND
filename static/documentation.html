@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styleDocumentary.css">
+    <link rel="stylesheet" href="styleDocumentation.css">
     <title>documentary</title>
 </head>
 <body>
@@ -19,6 +19,13 @@
     <a class="head" href="#websocket">Web socket</a>
     <a href="#transmitteddata">Transmitted data</a>
     <a class="head" href="#canvas">Canvas</a>
+    <a class="head" href="#fileApiDragDrop">File API/ Drag and Drop</a>
+    <a href="#dragDrop">Drag and Drop</a>
+    <a href="#openFile">Opening the File</a>
+    <a class="head" href="#html">Html Elements</a>
+    <a class="head" href="#CSS">CSS</a>
+    <a href="#customAnim">Custom Animation</a>
+
 </div>
 
 <div class="content">
@@ -27,10 +34,8 @@
     <a id="architecture"><h2>Architecture</h2></a>
     <a id="nodejs"><h3>Nodejs Server</h3></a>
     
-    <b>Nodejs</b> as a server (localhost:8080) in the background:<br>
-    <pre>
-    <code>start npm</code> 
-    </pre>
+    <b>Nodejs</b> as a server (localhost:8080) in the background:
+    <pre><code>start npm</code></pre>
     Hosts a websocket server with a simple broadcasting script to distribute messages to other clients.
     <pre><code>wss.clients.forEach(function each(player) {
         ...
@@ -134,8 +139,7 @@
         <code> is to display source code
     -->
    
-    <hr>
-    <p> 
+    <p>
         The myClick() function check that the image on the canvas is clicked and tracks where it is moved across it as well.
     </p>
     <pre>
@@ -185,7 +189,133 @@
             y: evt.clientY - rect.top
         };
     }
-    </pre>   
+    </pre>
+
+    <a id="fileApiDragDrop"><h2>File API/ Drag and Drop</h2></a>
+    <a id="dragDrop"><h3>Drag and Drop</h3></a>
+    <p>Added event handlers for the drag and drop area inside the canvas tag.</p>
+    <pre><code>&ltcanvas ... ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" ...&gt...&lt/canvas&gt</code></pre>
+
+    <hr>
+    <p>First the user enters the designated dropzone canvas area by dragging a file into it. The drag over handler fires and prevents the browser from proceeding with this standard behavior</p>
+    <pre><code>function dragOverHandler(ev) {
+    ev.preventDefault();
+}
+</code></pre>
+
+    <hr>
+    <p>Then user drops the file on canvas and the drop event fires. Again the browser standard behavior is explicitly disabled. Since the user may drop multiple files at once, looping through the event list is necessary. By matching the type to images, dropping anything else is ignored. The method of the DataTransferItemList interface, .getAsFile() is used to access the file.
+    </p>
+    <pre><code>function dropHandler(evt) {
+    evt.preventDefault();
+    if (evt.dataTransfer.items) {
+        for (var i = 0; i < evt.dataTransfer.items.length; i++) {
+            if (evt.dataTransfer.items[i].type.match('image.*')) {
+                var file = evt.dataTransfer.items[i].getAsFile();
+                drawImageOnCanvas(file);
+            }
+        }
+    }
+}</code></pre>
+
+    <hr>
+    <a id="openFile"><h3>File API</h3></a>
+    <p>Finally the file is used to draw the image onto the canvas. The File API interface fileReader is used to read the users file. The one line previously declared event model belongs to the fileReader and handles the results of the fileReaders read call. The fileReaders results are stored in an image variable and passed on to the worker, to tell the server to broadcast the new image.</p>
+    <pre><code>var img_in = new Image();
+var fileReader = new FileReader();
+fileReader.addEventListener("load", e => {
+    var img_in = new Image();
+    img_in.src = fileReader.result;
+    imgs[Object.entries(imgs).length] = { image: img_in, posX: (canvas.width / 2), posY: (canvas.height / 2) };
+    worker.postMessage({ type: "ImageAdded", message: { image: img_in.src, posX: (canvas.width / 2), posY: (canvas.height / 2) } });
+    renderMap();
+});
+fileReader.readAsDataURL(file);</code></pre>
+
+    <a id="html"><h2>HTML elements</h2></a>
+    <p>The chat text is displayed in a readonly  textarea.</p>
+    <pre>&lttextarea id="chatDisplay" name="chatDisplay" readonly class="chatTextLetters" rows="10" cols="30"&gtWelcome&lt/textarea&gt</pre>
+
+    <hr>
+    <p>For the users text input into a text type input field. It uses two HTML5 attributes. The Autofocus attribute makes it already selected when the page is loaded and the placeholder attribute is used to signal the user about this fields intentions.</p>
+    <pre><code>&ltinput id="nameInput" class="nameInputBox" type="text" placeholder="Your name" autofocus&gt</code></pre>
+
+    <hr>
+    <p>Classic button elements.</p>
+    <pre><code>&ltbutton id="chatSendButton" class="sendButton" type="button"&gt&lt/button&gt</code></pre>
+
+    <hr>
+    <p>For the user to upload his files, beside drag and drop, a input of type "file" is used. It also applies the Html5 element "multiple", which allows the user to upload multiple files at once.</p>
+    <pre><code>&ltinput id="files" class="fileInputButton" type="file" name="files[]" multiple accept="image/*"&gt&lt/input&gt</code></pre>
+
+    <a id="CSS"><h2>CSS</h2></a>
+    <p>The basic layout is two columns. The layout will will break for small screensizes.</p>
+    <pre><code>.colChat{
+    float: left;
+    height: 914px;
+    width: 515px;
+	...
+}
+</code>
+<code>
+.colMap{
+    float: left;
+    width:1165px;
+    height:914px;
+	...
+}
+</code></pre>
+
+    <hr>
+    <p>Form elements are enhanced with animations.</p>
+    <pre><code>.nameInputBox{
+    transform: scale(1.1);
+	...
+    transition: transform 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6)
+}
+.nameInputBox:focus{
+	...
+    transform: scale(1.13);
+}
+.nameInputBox:hover{
+	...
+    transform: scale(1.13);
+}
+.sendButton{
+	...
+    transform: scale(0.75);
+    transition: transform 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6), background-image 0.3s ease-in-out;
+}
+.sendButton:hover{
+	...
+    transform: scale(0.8);
+}
+.sendButton:focus{
+	...
+    transform: scale(0.8);
+}
+.sendButton:active{
+	...
+    transform: scale(0.76);
+}
+</code></pre>
+
+    <hr>
+    <a id="customAnim"><h2>Custom Animation</h2></a>
+    <p>Roll button recieves a custom animation. Only the Keyframes are defined and automatically interpolated by CSS.</p>
+    <pre><code>.rollButton:active{
+	...
+    animation: rollClick 3s;
+}
+
+@keyframes rollClick{
+    0%{-webkit-transform: rotate(0deg);}
+    2%{-webkit-transform: rotate(-6deg);}
+    3.5%{-webkit-transform: rotate(6deg);}
+    5%{-webkit-transform: rotate(0deg);}
+    100%{-webkit-transform: rotate(0deg);}
+}
+</code></pre>
 </div>
 
 </body>

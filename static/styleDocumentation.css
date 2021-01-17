@@ -52,3 +52,9 @@ div.content {
         float: none;
     }
 }
+
+pre {
+    background-color: #efefef;
+    padding: 20px;
+    margin-right: 350px;
+}
