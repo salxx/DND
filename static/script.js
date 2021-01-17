@@ -15,7 +15,7 @@ var click = false;
 var selected = 0;
 
 rollDiceButton.addEventListener("click", () => {
-    worker.postMessage({ type: "Message", message: { client: nameInput.value.trim(), dateTime: new Date().toISOString(), message: "2d20" } });
+    worker.postMessage({ type: "Message", message: { client: nameInput.value.trim(), dateTime: new Date().toISOString(), message: "1d20" } });
 });
 
 chatSendButton.addEventListener("click", () => {
@@ -49,12 +49,17 @@ worker.onmessage = (({ data }) => {
                 break;
             case "ImageReplaced":
                 const receivedMap = JSON.parse(data.imageMap);
-
                 for (i = 0; i < Object.entries(receivedMap).length; i++) {
                     imgs[i].posX = receivedMap[i].posX;
                     imgs[i].posY = receivedMap[i].posY;
                 }
                 renderMap();
+                break;
+            case "ImageDeleted":
+                console.log("delete: " + data.message);
+                delete imgs[data.message];
+                renderMap();
+                break;
         }
     }
 })
@@ -90,12 +95,32 @@ function myClick(canvas) {
     else {
         Object.entries(imgs).forEach(([key, value]) => {
             if (mousePos.x > value.posX && mousePos.x < value.posX + value.image.width && mousePos.y > value.posY && mousePos.y < value.posY + value.image.height) {
-                click = true;
-                selected = key;
+                if(ctrlPressed) {
+                    delete imgs[key];
+                    worker.postMessage({ type: "ImageDeleted", message: key });
+                    renderMap();
+                } else {
+                    click = true;
+                    selected = key;
+                }
             }
         });
     }
 }
+
+var ctrlPressed = false;
+
+window.addEventListener("keydown", function (event) {
+    if (event.ctrlKey) {
+        ctrlPressed = true;
+    }
+});
+
+window.addEventListener("keyup", function (event) {
+    if (!event.ctrlKey) {
+        ctrlPressed = false;
+    }
+});
 
 canvas.addEventListener('mousemove', function (evt) {
     mousePos = getMousePos(canvas, evt);
