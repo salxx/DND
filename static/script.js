@@ -41,6 +41,7 @@ worker.onmessage = (({ data }) => {
                 chatDisplay.scrollTop = 999999;
                 break;
             case "ImageReceived":
+                console.log("image from worker");
                 imageType = data.image;
                 var receivedImage = new Image();
                 receivedImage.src = imageType.image;
@@ -125,8 +126,8 @@ canvas.addEventListener('mousemove', function (evt) {
     mousePos = getMousePos(canvas, evt);
     if (click) {
         updatePosition();
-        renderMap();
     }
+    renderMap();
 }, false)
 
 function getMousePos(canvas, evt) {
@@ -191,9 +192,8 @@ function drawImageOnCanvas(file){
     fileReader.addEventListener("load", e => {
         var img_in = new Image();
         img_in.src = fileReader.result;
-        console.log(imgs);
         imgs[Object.entries(imgs).length] = { image: img_in, posX: (canvas.width / 2), posY: (canvas.height / 2) };
-        worker.postMessage({ type: "ImageAdded", message: { image: fileReader.result, posX: (canvas.width / 2), posY: (canvas.height / 2) } });
+        worker.postMessage({ type: "ImageAdded", message: { image: img_in.src, posX: (canvas.width / 2), posY: (canvas.height / 2) } });
         renderMap();
     });
     fileReader.readAsDataURL(file);

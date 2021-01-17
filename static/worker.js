@@ -78,12 +78,13 @@ function rollDiceRegexCheck(data) {
 }
 
 let ws;
-ws = new WebSocket('ws://localhost:8080');
 
 if (ws) {
     ws.onerror = ws.onopen = ws.onclose = null;
     ws.close();
 }
+
+ws = new WebSocket('ws://localhost:8080');
 
 ws.onopen = () => {
     console.log('Connection opened!');
