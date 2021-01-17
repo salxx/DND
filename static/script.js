@@ -148,7 +148,7 @@ chat_text_input.addEventListener("keyup", function(event){
    }
 });
 
-/*---------- Image button logic --------------*/
+/*---------- adding image to canvas logic --------------*/
 
 function dropHandler(evt) {
     console.log("drop detected");
