@@ -3,6 +3,7 @@ var worker = new Worker('worker.js');
 var nameInput = document.getElementById("nameInput");
 var chatInput = document.getElementById("chatInput");
 var chatSendButton = document.getElementById("chatSendButton");
+var rollDiceButton = document.getElementById("rollButton");
 var chatDisplay = document.getElementById("chatDisplay");
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
@@ -12,6 +13,10 @@ const imgs = {};
 var mousePos;
 var click = false;
 var selected = 0;
+
+rollDiceButton.addEventListener("click", () => {
+    worker.postMessage({ type: "Message", message: { client: nameInput.value.trim(), dateTime: new Date().toISOString(), message: "2d20" } });
+});
 
 chatSendButton.addEventListener("click", () => {
     if (chatInput.value.trim()) {

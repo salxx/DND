@@ -40,6 +40,7 @@ onmessage = ({ data }) => {
         switch (data.type) {
             case "Message":
                 console.log("Message received");
+                rollDiceRegexCheck(data);
                 addMessageToHistory(data);
                 sendDataOverWs(data);
                 break;
@@ -53,6 +54,23 @@ onmessage = ({ data }) => {
                 break;
         }
     }
+}
+
+let regex = new RegExp('^([0-9])[d]([0-9][0-9])?$');
+
+function rollDiceRegexCheck(data) {
+    const found = data.message.message.match(regex);
+    if(found == null) {
+        return;
+    }
+    console.log(found[1] + " "  + found[2]);
+    var diceroll = "[";
+    for(var i = 0; i < found[1]; i++) {
+        diceroll += (Math.floor(Math.random() * found[2]) + 1) + ", ";
+    }
+    diceroll = diceroll.replace(new RegExp(", $"), "]");
+    console.log(data.message.message.replace(regex, diceroll));
+    data.message.message = data.message.message.replace(regex, diceroll);
 }
 
 let ws;
