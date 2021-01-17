@@ -39,6 +39,7 @@ worker.onmessage = (({ data }) => {
                     combinedText += "[" + formatTime(element.dateTime) + "] " + element.client + ": " + element.message + "\n";
                 });
                 chatDisplay.innerHTML = combinedText;
+                chatDisplay.scrollTop = 999999;
                 break;
             case "ImageReceived":
                 imageType = data.image;
