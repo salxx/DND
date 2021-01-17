@@ -137,29 +137,19 @@ function getMousePos(canvas, evt) {
     };
 }
 
-function dropHandler(ev) {
+function dropHandler(evt) {
     console.log("drop detected");
 
     //stop browser default reaction when dropping into, so we can run our custom code
-    ev.preventDefault();
+    evt.preventDefault();
 
-    if (ev.dataTransfer.items) {
+    if (evt.dataTransfer.items) {
         //use DataTransferItemList interface for the image
-        for (var i = 0; i < ev.dataTransfer.items.length; i++) {
+        for (var i = 0; i < evt.dataTransfer.items.length; i++) {
             //only images
-            if (ev.dataTransfer.items[i].type.match('image.*')) {
-                var file = ev.dataTransfer.items[i].getAsFile();
-                console.log('... image[' + i + '].name = ' + file.name);
-                var img_in = new Image();
-                var fileReader = new FileReader();
-                fileReader.addEventListener("load", e => {
-                    var img_in = new Image();
-                    img_in.src = fileReader.result;
-                    imgs[Object.entries(imgs).length] = { image: img_in, posX: (canvas.width / 2), posY: (canvas.height / 2) };
-                    //TODO FIXME FL
-                    worker.postMessage({ type: "ImageAdded", message: { image: fileReader.result, posX: (canvas.width / 2), posY: (canvas.height / 2) } });
-                });
-                fileReader.readAsDataURL(file);
+            if (evt.dataTransfer.items[i].type.match('image.*')) {
+                var file = evt.dataTransfer.items[i].getAsFile();
+                drawImageOnCanvas(file);
             }
         }
     }
@@ -170,4 +160,26 @@ function dragOverHandler(ev) {
 
     //stop browser default reaction when dropping into, so we can run our custom code
     ev.preventDefault();
+}
+
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+function handleFileSelect(evt){
+    var files = evt.target.files; //FileList of File objects
+    for(var i = 0, file; file = files[i]; i++){
+        drawImageOnCanvas(file);
+    }
+}
+
+function drawImageOnCanvas(file){
+
+    var img_in = new Image();
+    var fileReader = new FileReader();
+    fileReader.addEventListener("load", e => {
+        var img_in = new Image();
+        img_in.src = fileReader.result;
+        imgs[Object.entries(imgs).length] = { image: img_in, posX: (canvas.width / 2), posY: (canvas.height / 2) };
+        //TODO FIXME FL
+        worker.postMessage({ type: "ImageAdded", message: { image: fileReader.result, posX: (canvas.width / 2), posY: (canvas.height / 2) } });
+    });
+    fileReader.readAsDataURL(file);
 }

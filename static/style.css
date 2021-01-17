@@ -405,6 +405,10 @@ canvas{
     100%{-webkit-transform: rotate(0deg);}
 }
 
+.fileInputButton{
+    display:none;
+}
+
 /*---------------unused heading---------------*/
 
 .heading{

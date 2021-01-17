@@ -35,7 +35,10 @@
                         ondragover="dragOverHandler(event);" width="900" height="611" onclick="myClick(this)">your
                         browser does not support the
                         HTML canvas tag</canvas></div>
-                <div class="mapButtons"> <button class="rollButton" id="rollButton"></button><button class="imageButton"></button>
+                <div class="mapButtons">
+                    <button class="rollButton" id="rollButton"></button>
+                    <button class="imageButton" id="imageButton" onclick="document.getElementById('files').click();"></button>
+                    <input id="files" class="fileInputButton" type="file" name="files[]" multiple accept="image/*"></input>
                 </div>
                 <div class="skell"><img src="images/skell.png" alt="image of two skelletons cheering" width="103"
                         height="126"></div>
