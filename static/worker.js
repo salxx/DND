@@ -56,7 +56,7 @@ onmessage = ({ data }) => {
     }
 }
 
-let regex = new RegExp('^([0-9])[d]([0-9][0-9])?$');
+let regex = new RegExp('^([0-9])[d]([0-9][0-9]?)$');
 
 function rollDiceRegexCheck(data) {
     const found = data.message.message.match(regex);
