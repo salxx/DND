@@ -137,6 +137,19 @@ function getMousePos(canvas, evt) {
     };
 }
 
+/*---------- pushing enter from text input box calls submit button ----------*/
+
+var chat_text_input = document.getElementById("chatInput");
+chat_text_input.addEventListener("keyup", function(event){
+   //enter key pressed
+   if(event.keyCode === 13){
+     event.preventDefault();
+     document.getElementById("chatSendButton").click();
+   }
+});
+
+/*---------- Image button logic --------------*/
+
 function dropHandler(evt) {
     console.log("drop detected");
 
