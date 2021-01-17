@@ -18,6 +18,7 @@
     <a href="#websocketwebworker">Web socket in the Web Worker</a>
     <a class="head" href="#websocket">Web socket</a>
     <a href="#transmitteddata">Transmitted data</a>
+    <a class="head" href="#canvas">Canvas</a>
 </div>
 
 <div class="content">
@@ -98,8 +99,93 @@
     <a id="transmitteddata"><h3>Transmitted data</h3></a>
     The web socket itself does not know which data it sends. The data is typed by the <i>data.message.type</i> attribute and taken care of by the web worker.
     The data can either be text, coordinates, images, or image id, respectively for the given messge types.
-    </div>
 
+    
+    <a id="canvas"><h2> Canvas Methods </h2></a>
+    <hr>
+    <p> 
+        Once the window is loaded, the canvas is then called and rendered into the canvas space.
+    </p>
+    <pre>
+        window.onload = function () {
+            img.src = "maps/canyon_map.jpg";
+            img.addEventListener("load", function () {
+                renderMap();
+            });
+        }
+    </pre>
+    <hr>
+    <p> 
+        The renderMap() function renders the map whenever it is called by drawing the image in the canvas again to avoid any overlaps. 
+    </p>
+    <pre>
+    function renderMap() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        Object.entries(imgs).forEach(([key, value]) => {
+            ctx.drawImage(value.image, value.posX, value.posY, value.image.width, value.image.height);
+        });
+    }
+    </pre>
+    <hr>
+    
+    <!--
+        <pre> is used to format text exactly it is written.
+        <code> is to display source code
+    -->
+   
+    <hr>
+    <p> 
+        The myClick() function check that the image on the canvas is clicked and tracks where it is moved across it as well.
+    </p>
+    <pre>
+            function myClick(canvas) {
+                ...
+        }           
+    </pre>
+    <hr>
+    <p>
+        The eventListeners below check when the ctrl button is pressed and/or released.
+    </p>
+    <pre>
+        window.addEventListener("keydown", function (event) {
+            if (event.ctrlKey) {
+                ctrlPressed = true;
+            }
+        });
+        
+        window.addEventListener("keyup", function (event) {
+            if (!event.ctrlKey) {
+                ctrlPressed = false;
+            }
+        });
+    </pre>
+    <hr>
+    <p> 
+        The eventListener below checks that once the mouse is moved across the canvas, it will render the map accordingly
+    </p>
+    <pre>
+    canvas.addEventListener('mousemove', function (evt) {
+        mousePos = getMousePos(canvas, evt);
+        if (click) {
+            updatePosition();
+        }
+        renderMap();
+    }, false)
+    </pre>
+    <hr>
+    <p> 
+        The getMousePos() function simply checks the position of the mouse on the canvas.
+    </p>
+    <pre>
+    function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+        };
+    }
+    </pre>   
 </div>
 
 </body>
